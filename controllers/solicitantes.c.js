@@ -1,5 +1,7 @@
 const { json } = require("express");
 const solicitantesModel = require("../models/solicitantes.m.js")
+//importamos bcrypt
+const bcrypt = require('bcrypt');
 
 class solicitantesControllers {
   //listar general

@@ -1,4 +1,6 @@
 const connection = require('./conexion');
+//importamos bcrypt
+const bcrypt = require('bcrypt');
 
 class solicitantesModel {
     ///listar en general

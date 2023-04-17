@@ -1,4 +1,6 @@
 const personalModel = require("../models/personal.m")
+//importamos bcrypt
+const bcrypt = require('bcrypt');
 
 class personalControllers {
   //listar general
@@ -38,14 +40,40 @@ class personalControllers {
     //agregar un personal
     agregar(parametro){
       console.log(parametro);
-      return new Promise((resolve, reject) => {
+      console.log('estamos en controladores')
+      return new Promise( (resolve, reject) => {
         // el if compara lo que se debe tener para agregar 
         if (!parametro || !parametro.usuario_unico || !parametro.nombre || !parametro.CI || !parametro.cargo || !parametro.especialidad || !parametro.contrasena) {
           return reject("Se debe ingresar correctamente los parametros")
         }
-        personalModel.agregar(parametro)
-        .then((resultado) =>  {
-          resolve(resultado)
+        //verificar que sea un USUARIO UNICO y CI
+        var contador = 0;
+        console.log('entramos a verificar')
+        personalModel.listar()
+        .then((resultado) => {
+          console.log(resultado);
+          resultado.forEach(personal => {
+            console.log('entramos al foreach')
+            if(JSON.stringify(personal.usuario_unico) === JSON.stringify(parametro.usuario_unico)) {
+              console.log('vemos si existe usuario');
+              contador++;
+              return resolve (`El usuario ${parametro.usuario_unico} ya existe`)
+            }
+            if(JSON.stringify(personal.CI) === JSON.stringify(parametro.CI)) {
+              contador++;
+              return resolve (`El personal propietario de la CI ${parametro.CI} ya se encuentra registardo`)
+            }
+          });
+          if(contador === 0) {
+            personalModel.agregar(parametro)
+            .then((resultado) =>  {
+              resolve(resultado)
+            })
+            .catch((err) => {
+              reject(err)
+            })
+          }
+          resolve ('todo bien')
         })
         .catch((err) => {
           reject(err)
@@ -62,13 +90,13 @@ class personalControllers {
         let resultado = JSON.parse(json)
         if (resultado.length == 0) {
            console.log('No existe personal');
-           return resolve(`No hay personal registrado con el id: ${parametro}`)
+           return resolve(`No hay personal registrado con la CI: ${parametro}`)
         };
         const eliminado = new Promise((resolve, reject) => {
           personalModel.eliminar(parametro)
           .then(() => {
             console.log('ya se elimino')
-            resolve(`se ha eliminado la reserva con el id: ${parametro}`);
+            resolve(`se ha eliminado la persona con la CI: ${parametro}`);
           })
           .catch((err) => {
             reject(err);

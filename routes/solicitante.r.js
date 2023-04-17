@@ -3,6 +3,8 @@ var router = express.Router();
 
 //importar controladores 
 var solicitantesControllers = require("../controllers/solicitantes.c.js")
+//importamos bcrypt
+const bcrypt = require('bcrypt')
 
 //mostrar
 router.get('/', function(req, res, next) {
