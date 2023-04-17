@@ -53,6 +53,6 @@ router.delete('/eliminar/:CI', function(req, res, next) {
   .catch((err) => {
     res.send(err)
   })
-})   //PROBAR CON /eliminar/4
+})   //PROBAR CON /eliminar/30976127
 
 module.exports = router;

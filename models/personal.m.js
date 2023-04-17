@@ -28,7 +28,16 @@ class personalModel{
     //agregar personal
     agregar(parametro){
         console.log("llegamos a modulos klk")
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+
+            //Encriptar contraseñas
+            var contrasenaHash = await bcrypt.hash(parametro.contrasena, 8);
+            parametro.contrasena = contrasenaHash;
+            //añadir a los usuarios
+            connection.query(`INSERT INTO usuarios (usuario, contrasena, rol) VALUES ("${parametro.usuario_unico}", "${parametro.contrasena}", "admin")`, function (error, results, fields) {
+                if (error) reject (error);
+                resolve("Se agrego correctamente el usuario");
+            })
             connection.query("INSERT INTO `personal` set ?", [parametro], function (error, results, fields) {
                 if (error) reject (error);
                 resolve("Se agrego correctamente");

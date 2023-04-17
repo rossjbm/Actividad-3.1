@@ -73,7 +73,7 @@ class personalControllers {
               reject(err)
             })
           }
-          resolve ('todo bien')
+          resolve (`Se agregó correctamente el personal: ${parametro.nombre}`)
         })
         .catch((err) => {
           reject(err)
