@@ -33,11 +33,14 @@ class personalModel{
             //Encriptar contraseñas
             var contrasenaHash = await bcrypt.hash(parametro.contrasena, 8);
             parametro.contrasena = contrasenaHash;
-            //añadir a los usuarios
+
+            //añadir a los usuarios para darle su rol
             connection.query(`INSERT INTO usuarios (usuario, contrasena, rol) VALUES ("${parametro.usuario_unico}", "${parametro.contrasena}", "admin")`, function (error, results, fields) {
                 if (error) reject (error);
                 resolve("Se agrego correctamente el usuario");
             })
+
+            //registrar nuevo personal
             connection.query("INSERT INTO `personal` set ?", [parametro], function (error, results, fields) {
                 if (error) reject (error);
                 resolve("Se agrego correctamente");

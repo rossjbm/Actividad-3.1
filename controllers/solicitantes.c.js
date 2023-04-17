@@ -44,12 +44,36 @@ class solicitantesControllers {
     console.log(parametro);
     return new Promise((resolve, reject) => {
       // el if compara lo que se debe tener para agregar 
-      if (!parametro || !parametro.nombre_apellido || !parametro.CI || !parametro.fecha_nacimiento || !parametro.direccion || !parametro.contrasena || !parametro.nro_telefono) {
+      if (!parametro || !parametro.usuario_unico || !parametro.nombre_apellido || !parametro.CI || !parametro.fecha_nacimiento || !parametro.direccion || !parametro.contrasena || !parametro.nro_telefono) {
       return reject("Se debe ingresar correctamente los parametros")
       }
-      solicitantesModel.agregar(parametro)
-      .then((resultado) =>  {
-        resolve(resultado)
+
+      var contador = 0;
+      solicitantesModel.listar()
+      .then((resultado) => {
+        console.log(resultado);
+        resultado.forEach(solicitante => {
+          console.log('entramos al foreach')
+          if(JSON.stringify(solicitante.usuario_unico) === JSON.stringify(parametro.usuario_unico)) {
+            console.log('vemos si existe usuario');
+            contador++;
+            return resolve (`El usuario ${parametro.usuario_unico} ya existe`)
+          }
+          if(JSON.stringify(solicitante.CI) === JSON.stringify(parametro.CI)) {
+            contador++;
+            return resolve (`El solicitante propietario de la CI ${parametro.CI} ya se encuentra registardo`)
+          }
+        });
+        if(contador === 0) {
+          solicitantesModel.agregar(parametro)
+          .then((resultado) =>  {
+            resolve(resultado)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+        }
+        resolve (`Se agregó correctamente el solicitante: ${parametro.nombre_apellido}`)
       })
       .catch((err) => {
         reject(err)
