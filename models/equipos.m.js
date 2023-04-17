@@ -1,4 +1,4 @@
-const connection = require('./conexion')
+const connection = require('../conecction/conexion')
 
 class equiposModel {
     //mostrar general
