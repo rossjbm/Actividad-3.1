@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2023 at 08:05 PM
+-- Generation Time: Apr 17, 2023 at 09:36 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -119,8 +119,7 @@ CREATE TABLE `reservas_equipos` (
 INSERT INTO `reservas_equipos` (`id`, `solicitante`, `hora_inicio`, `hora_fin`, `personal_solici`, `fecha`, `motivo`, `equipo_solici`) VALUES
 (1, 2, 500, 1500, 1, '2023-04-18', 'fdsdgsgsdgsdgs', 1),
 (2, 1, 1000, 1330, 2, '2018-04-09', 'ddddddddddddddddddddd', 2),
-(3, 2, 300, 1500, 3, '2023-04-25', 'drgetweyeyyey', 3),
-(4, 3, 300, 1500, 1, '2023-04-18', 'ver mario', 1);
+(3, 2, 300, 1500, 3, '2023-04-25', 'drgetweyeyyey', 3);
 
 -- --------------------------------------------------------
 
@@ -157,6 +156,7 @@ INSERT INTO `reservas_espacios` (`id`, `hora_inicio`, `hora_fin`, `personal_soli
 
 CREATE TABLE `solicitantes` (
   `id` int(15) NOT NULL,
+  `usuario_unico` varchar(50) NOT NULL,
   `nombre_apellido` text NOT NULL,
   `CI` int(20) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
@@ -169,10 +169,10 @@ CREATE TABLE `solicitantes` (
 -- Dumping data for table `solicitantes`
 --
 
-INSERT INTO `solicitantes` (`id`, `nombre_apellido`, `CI`, `fecha_nacimiento`, `direccion`, `contrasena`, `nro_telefono`) VALUES
-(1, 'Galko Casimiro Buenvizco', 38765888, '2023-01-01', 'Mi corazon casa unica', 'galkooo_rangel', 2123367943),
-(2, 'SHakira', 44345454, '2012-11-08', 'Miami UUEE', 'salpique_3mil', 2147483647),
-(3, 'Juanito Alcachofa', 23375764, '2020-04-30', 'Juegagerman Calle principal via Toronto', 'lenay_copito', 1111112222);
+INSERT INTO `solicitantes` (`id`, `usuario_unico`, `nombre_apellido`, `CI`, `fecha_nacimiento`, `direccion`, `contrasena`, `nro_telefono`) VALUES
+(1, '', 'Galko Casimiro Buenvizco', 38765888, '2023-01-01', 'Mi corazon casa unica', 'galkooo_rangel', 2123367943),
+(2, '', 'SHakira', 44345454, '2012-11-08', 'Miami UUEE', 'salpique_3mil', 2147483647),
+(3, '', 'Juanito Alcachofa', 23375764, '2020-04-30', 'Juegagerman Calle principal via Toronto', 'lenay_copito', 1111112222);
 
 -- --------------------------------------------------------
 
@@ -197,8 +197,20 @@ CREATE TABLE `trabajos` (
 INSERT INTO `trabajos` (`id`, `personal_solici`, `reserva_solici`, `equipos_solici`, `fecha_inicio`, `fecha_fin`, `descripcion`) VALUES
 (1, 1, 2, 3, '2020-04-02', '2021-06-17', 'carota con azucar'),
 (2, 3, 3, 1, '2023-04-12', '2023-05-18', 'aaaaaaaaaaa'),
-(3, 2, 1, 3, '2021-05-19', '2023-05-04', 'viva lumity'),
-(4, 1, 4, 3, '2023-04-12', '2023-05-04', 'fffffffffff');
+(3, 2, 1, 3, '2021-05-19', '2023-05-04', 'viva lumity');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(15) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `contrasena` varchar(20) NOT NULL,
+  `rol` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -257,6 +269,12 @@ ALTER TABLE `trabajos`
   ADD KEY `equipos_relacionados` (`equipos_solici`);
 
 --
+-- Indexes for table `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -276,7 +294,7 @@ ALTER TABLE `espacios`
 -- AUTO_INCREMENT for table `personal`
 --
 ALTER TABLE `personal`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `reservas_equipos`
@@ -301,6 +319,12 @@ ALTER TABLE `solicitantes`
 --
 ALTER TABLE `trabajos`
   MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
