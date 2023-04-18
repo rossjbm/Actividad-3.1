@@ -3,9 +3,9 @@ var mysql = require('mysql');
 const { HOST, USER, PASSWORD, DATABASE} = process.env
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'bd_audiovisuales'
+  user     : process.env.USER,
+  password : process.env.PASSWORD,
+  database : process.env.DATABASE
 }); 
  
 connection.connect(function (err) {
