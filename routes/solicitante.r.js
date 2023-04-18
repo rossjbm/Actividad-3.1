@@ -36,7 +36,6 @@ router.post('/agregar', function(req, res, next) {
   const parametro = { usuario_unico, nombre_apellido, CI, fecha_nacimiento, direccion, contrasena, nro_telefono}
   solicitantesControllers.agregar(parametro)
   .then((resultado) => {
-    console.log("se agrego correctamente :)")
     res.send(resultado);
   })
   .catch((err) => {

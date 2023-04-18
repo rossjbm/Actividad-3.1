@@ -51,15 +51,14 @@ class solicitantesControllers {
       var contador = 0;
       solicitantesModel.listar()
       .then((resultado) => {
-        console.log(resultado);
         resultado.forEach(solicitante => {
-          console.log('entramos al foreach')
           if(JSON.stringify(solicitante.usuario_unico) === JSON.stringify(parametro.usuario_unico)) {
-            console.log('vemos si existe usuario');
+            console.log('Ese usuario ya existe');
             contador++;
             return resolve (`El usuario ${parametro.usuario_unico} ya existe`)
           }
           if(JSON.stringify(solicitante.CI) === JSON.stringify(parametro.CI)) {
+            console.log('Ese solcitante ya existe');
             contador++;
             return resolve (`El solicitante propietario de la CI ${parametro.CI} ya se encuentra registardo`)
           }
