@@ -1,11 +1,7 @@
-var dotenv = require('dotenv').config();
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'bd_audiovisuales'
-}); 
+require('dotenv').config();
+var mysql = require('mysql');
+const { HOST, USER, PASSWORD, DATABASE} = process.env
+var connection = mysql.createConnection({HOST, USER, PASSWORD, DATABASE}); 
  
 connection.connect(function (err) {
     if (err) {
