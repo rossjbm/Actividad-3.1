@@ -35,9 +35,9 @@ class solicitantesModel {
             parametro.contrasena = contrasenaHash;
 
             //añadir a los usuarios para darle su rol
-            connection.query(`INSERT INTO usuarios (usuario, contrasena, rol) VALUES ("${parametro.usuario_unico}", "${parametro.contrasena}", "user")`, function (error, results, fields) {
+            connection.query(`INSERT INTO usuarios (usuario, contrasena, rol) VALUES ("${parametro.usuario_unico}", "${parametro.contrasena}", "solicitante")`, function (error, results, fields) {
                 if (error) reject (error);
-                resolve("Se agrego correctamente el usuario");
+                resolve("Se agrego correctamente a la tabla usuario");
             })
 
             connection.query("INSERT INTO `solicitantes` set ?", [parametro], function (error, results, fields) {
