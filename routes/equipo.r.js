@@ -10,12 +10,14 @@ var equipoControllers = require("../controllers/equipos.c.js")
 router.get('/', function(req, res, next) {
   equipoControllers.listar()  //llamamos a nuestra funcion listar() de la clase equipoControllers, en la cual se incluye una promesa
   .then ((resultado) => {  //Cuando nuestra promesa se jecuta conrrectamente, al usuario le retornaremos o le mostramos lo que contiene la variable resultado, la cual se explica a más detalle en Controladores
-    res.send(resultado); //mostramos al usuario
+    //res.send(resultado); //mostramos al usuario
+    res.status(200).render('equipo', {title: 'EQUIPOS' });
   })
   .catch ((err) => {  //Por el contrario cuando nuestra promesa al ejecutarse ocurre un error le avisamos al usuario del mismo
     res.send(err) //mostramos al usuario el error
   })
 });
+
 //listar por Id GET
 router.get('/:id', function(req, res, next) { //en la URL el usuario ha de dejar el numero (ID) correspondiente al equipo que desea ver
   let parametro = req.params.id  //este ID lo guardamos en la variable parametro, pues este sera nuestro parametro de busqueda

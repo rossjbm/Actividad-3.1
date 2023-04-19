@@ -3,8 +3,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'SALA DE AUDIOVISUALES' });
+  res.status(200).render('index', { title: 'SALA DE AUDIOVISUALES' });
 });
 
 module.exports = router;
+
 
