@@ -1,6 +1,6 @@
 const personalModel = require("../models/personal.m")
 //importamos bcrypt
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 class personalControllers {
   //listar general

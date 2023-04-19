@@ -3,7 +3,7 @@ var router = express.Router();
 var personalControllers = require("../controllers/personal.c.js")
 
 //importamos bcrypt
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 //listar
 router.get('/', function(req, res, next) {
