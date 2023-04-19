@@ -1,6 +1,6 @@
 const connection = require('../conecction/conexion');
 //importamos bcrypt
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 class solicitantesModel {
     ///listar en general
@@ -31,7 +31,7 @@ class solicitantesModel {
         console.log("llegamos a modulos klk")
         return new Promise(async (resolve, reject) => {
             //Encriptar contraseñas
-            var contrasenaHash = await bcrypt.hash(parametro.contrasena, 8);
+            var contrasenaHash = await bcryptjs.hash(parametro.contrasena, 8);
             parametro.contrasena = contrasenaHash;
 
             //añadir a los usuarios para darle su rol
