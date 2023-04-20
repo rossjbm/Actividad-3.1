@@ -3,11 +3,12 @@ var router = express.Router();
 
 //importar controladores 
 var solicitantesControllers = require("../controllers/solicitantes.c.js")
+var verificador = require("../middleware/login.mid.js");
 //importamos bcrypt
 const bcryptjs = require('bcryptjs');
 
 //mostrar
-router.get('/', function(req, res, next) {
+router.get('/',verificador.restringirSolicitante, function(req, res, next) {
   solicitantesControllers.listar()
   .then((resultado) => {
     res.send(resultado);
@@ -18,7 +19,7 @@ router.get('/', function(req, res, next) {
 });
 
 //busqueda por Cedula
-router.get('/:CI', function(req, res, next) {
+router.get('/:CI',verificador.restringirSolicitante, function(req, res, next) {
   const parametro = req.params.CI
   solicitantesControllers.listar_Cedula(parametro)
   .then((resultado) => {
@@ -31,7 +32,7 @@ router.get('/:CI', function(req, res, next) {
 
 
 //agregar
-router.post('/agregar', function(req, res, next) {
+router.post('/agregar',verificador.restringirSolicitante, function(req, res, next) {
   const { usuario_unico, nombre_apellido, CI, fecha_nacimiento, direccion, contrasena, nro_telefono} = req.body
   const parametro = { usuario_unico, nombre_apellido, CI, fecha_nacimiento, direccion, contrasena, nro_telefono}
   solicitantesControllers.agregar(parametro)

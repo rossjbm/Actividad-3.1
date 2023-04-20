@@ -9,7 +9,7 @@ class login{
             },
             process.env.SECRETO,
             {
-                expiresIn:'2m'
+                expiresIn:'10m'
             }
         )
     }
@@ -20,6 +20,7 @@ class login{
                 const sellado = JWT.verify(Token,process.env.SECRETO);
                  return sellado
               } catch(error) {
+                console.log(error);
                 return null
             }
 

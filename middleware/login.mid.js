@@ -19,7 +19,7 @@ class verificador3000{
             return res.send(error)
         }
     }  
-     async verificadorDeRol(req, res, next){
+     async restringirSolicitante(req, res, next){
         console.log("llega");
         try{
             const token= req.headers.authorization.split(' ').pop()
@@ -28,7 +28,8 @@ class verificador3000{
                 res.status(404)
                 return res.send("Token Invalido")
             }
-            if (sellado.rol = 'solicitante') {
+            if (sellado.role != "personal" && sellado.role != "admin" ) {
+                console.log(sellado.role);
                 res.status(404)
                 return res.send("No tienes el rol necesario")
             }

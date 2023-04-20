@@ -11,25 +11,6 @@ const { token } = require('morgan');
 
 //LISTAR
 router.get('/', verificador.verificador, function(req, res, next) {
-  const tokenEntrante = req.headers.authorization.split(' ').pop()
-  console.log("req.headers.authorization");
-  
-  console.log("LLEGO TOKE: "+tokenEntrante)
-
-
-
-  // verificador.verificador(tokenEntrante)
-  //   .then((sellado)=>{
-  //     console.log(sellado);
-  //     console.log("seccion activa")
-  //   })
-  //   .catch((err)=>{
-  //     console.log(err);
-  //     console.log("seccion cerrada");
-  //     res.send(err)
-  //   })
-
-
   console.log('ESTAMOS EN RUTA');
   espaciosControllers.listar()
   .then ((resultado) => {
@@ -40,7 +21,7 @@ router.get('/', verificador.verificador, function(req, res, next) {
   })
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id',verificador.verificador, function(req, res, next) {
   let parametro = req.params.id
   espaciosControllers.listarID(parametro)
   .then((resultado) => {
@@ -52,7 +33,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 //MODIFICAR ESPACIOS 
-router.put('/modificar/:id', function(req, res, next) {
+router.put('/modificar/:id',verificador.restringirSolicitante, function(req, res, next) {
   const parametro = req.params.id; 
   let { nombre , direccion , descripcion , estatus } = req.body; 
   const espacioModificar = { nombre , direccion , descripcion , estatus } 
@@ -66,7 +47,7 @@ router.put('/modificar/:id', function(req, res, next) {
 })
 
 //AGREGAR ESPACIOS
-router.post('/agregar', function(req, res, next) {
+router.post('/agregar',verificador.restringirSolicitante, function(req, res, next) {
   const { nombre, direccion, descripcion, estatus} = req.body
   const parametro = { nombre, direccion, descripcion, estatus}
   espaciosControllers.agregar(parametro)

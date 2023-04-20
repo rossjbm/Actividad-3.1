@@ -3,9 +3,10 @@ var router = express.Router();
 
 //importar controladores 
 var trabajosControllers = require("../controllers/trabajos.c.js");
+var verificador = require("../middleware/login.mid.js");
 
 //listar general
-router.get('/', function(req, res, next) {
+router.get('/',verificador.restringirSolicitante, function(req, res, next) {
     console.log('estamos en ruta')
     trabajosControllers.listar()
     .then((resultado) => {
@@ -18,7 +19,7 @@ router.get('/', function(req, res, next) {
 )
 
 //listar por id
-router.get('/:id', function(req, res, next) {
+router.get('/:id',verificador.restringirSolicitante, function(req, res, next) {
   let parametro = req.params.id
   trabajosControllers.listarID(parametro)
   .then((resultado) => {
@@ -30,7 +31,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 //listar por personal
-router.get('/personal/:id_personal', function(req, res, next) {
+router.get('/personal/:id_personal',verificador.restringirSolicitante, function(req, res, next) {
   let parametro = req.params.id_personal  //usuario ingrese el id del personal
   trabajosControllers.listarPersonal(parametro)
   .then((resultado) => {
@@ -42,7 +43,7 @@ router.get('/personal/:id_personal', function(req, res, next) {
 });
 
 //listar por fecha específica inicial del trabajo
-router.get('/fechaInicial/:fecha', function(req, res, next) {
+router.get('/fechaInicial/:fecha',verificador.restringirSolicitante, function(req, res, next) {
   let parametro = req.params.fecha
   console.log(`buscar trabajo con la fecha ${parametro}`) //
   trabajosControllers.listarFechaI(parametro)
@@ -55,7 +56,7 @@ router.get('/fechaInicial/:fecha', function(req, res, next) {
 });  
 
 //listar por fecha específica final del trabajo
-router.get('/fechaFinal/:fecha', function(req, res, next) {
+router.get('/fechaFinal/:fecha',verificador.restringirSolicitante, function(req, res, next) {
   let parametro = req.params.fecha
   console.log(`buscar trabajo con la fecha ${parametro}`) //
   trabajosControllers.listarFechaF(parametro)
@@ -68,7 +69,7 @@ router.get('/fechaFinal/:fecha', function(req, res, next) {
 }); 
 
 //listar por rango de fechas
-router.get('/fechasRango/:fechaI/:fechaF', function(req, res, next) {
+router.get('/fechasRango/:fechaI/:fechaF',verificador.restringirSolicitante, function(req, res, next) {
   let fechaI = req.params.fechaI
   let fechaF = req.params.fechaF
   console.log(`buscar trabajo que se necuentre entre ${fechaI} a ${fechaF}`) 
@@ -82,7 +83,7 @@ router.get('/fechasRango/:fechaI/:fechaF', function(req, res, next) {
 })  //PROBAR con /fechasRango/2023-04-10/2023-04-19 
 
 //eliminar trabajos
-router.delete('/eliminar/:id', function(req, res, next) {
+router.delete('/eliminar/:id',verificador.restringirSolicitante, function(req, res, next) {
   const parametro = req.params.id
   console.log(parametro);
   trabajosControllers.eliminar(parametro)
@@ -96,7 +97,7 @@ router.delete('/eliminar/:id', function(req, res, next) {
 }) //PROBAR CON /eliminar/4
 
 //agregar trabajos
-router.post('/agregar', function(req, res, next) {
+router.post('/agregar',verificador.restringirSolicitante, function(req, res, next) {
   const { personal_solici, reserva_solici, equipos_solici, fecha_inicio, fecha_fin, descripcion} = req.body
   const parametro = { personal_solici, reserva_solici, equipos_solici, fecha_inicio, fecha_fin, descripcion}
   trabajosControllers.agregar(parametro)

@@ -2,13 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 //importar controladores OJO
-var equipoControllers = require("../controllers/equipos.c.js");
-const { route } = require('./index.js');
+var equipoControllers = require("../controllers/equipos.c.js")
 
 
 
 //LISTAR metodo GET
-router.get('/', function(req, res, next) {
+router.get('/',verificador.verificador, function(req, res, next) {
   equipoControllers.listar()  //llamamos a nuestra funcion listar() de la clase equipoControllers, en la cual se incluye una promesa
   .then ((resultado) => {  //Cuando nuestra promesa se jecuta conrrectamente, al usuario le retornaremos o le mostramos lo que contiene la variable resultado, la cual se explica a más detalle en Controladores
     //res.send(resultado); //mostramos al usuario
@@ -20,7 +19,7 @@ router.get('/', function(req, res, next) {
 });
 
 //listar por Id GET
-router.get('/id:id', function(req, res, next) { //en la URL el usuario ha de dejar el numero (ID) correspondiente al equipo que desea ver
+router.get('/:id', function(req, res, next) { //en la URL el usuario ha de dejar el numero (ID) correspondiente al equipo que desea ver
   let parametro = req.params.id  //este ID lo guardamos en la variable parametro, pues este sera nuestro parametro de busqueda
   equipoControllers.listarID(parametro) //llamamos a la funcion listarID() y le enviamos el parametro de busqueda
   .then((resultado) => {
@@ -32,9 +31,6 @@ router.get('/id:id', function(req, res, next) { //en la URL el usuario ha de dej
 });
 
 //AGREGAR EQUIPOS metodo POST
-router.get('/agregar', function(req, res, next) {
-  res.status(200).render('equipoPost', { title: 'Ingresa los Datos del Equipo' });
-});
 router.post('/agregar', function(req, res, next) { //Para agregar equipos el usuario ha de colocar en la URL "agregar", esto para que sepamos que la funcion a ejecutar es agregar y evitar confusiones. Importante que el usuario deje en el cuerpo del req los datos el equipo ha agregar
   const { nombre, serial, descripcion, fecha_adquisicion, estatus} = req.body //Del req.body solo tomaremos determinadas propiedades, esto para evitar errores si el usuario ingresa una propiedad de más que no es requerida. Además no se extrae el id, puesto que la DB la añadirá automáticamente
   const parametro = { nombre, serial, descripcion, fecha_adquisicion, estatus} //estas propiedades las cuardamos en una constante
@@ -50,7 +46,7 @@ router.post('/agregar', function(req, res, next) { //Para agregar equipos el usu
 });
 
 
-//eliminar equipos metodo DELETE. En el navegador me esta devolviendo un GET x"d
+//eliminar equipos metodo DELETE
 router.delete('/eliminar/:id', function(req, res, next) { // A la hora de eliminar se coloca el /eliminar y como siguiente el ID del equipo que se desea eliminar
   const parametro = req.params.id  //lo guardamos en una variable
   console.log(parametro); //para ver (por consola) el id del equipo que vamos a borrar
@@ -66,7 +62,7 @@ router.delete('/eliminar/:id', function(req, res, next) { // A la hora de elimin
 
 
 //modificar equipo metodo PUT
-router.put('/modificar/:id', function(req, res, next) {
+router.put('/modificar/:id',verificador.restringirSolicitante, function(req, res, next) {
   const parametro = req.params.id; //Guardamos id en la variable parametro, como el las anteriores ocasiones por medio de parametro buscaremos cual es el equipo a modificar
   let { nombre , serial , descripcion , fecha_adquisicion , estatus } = req.body; //extraemos de cuerpo las propiedades necesarias para actualizar, excepto el ID puesto que el usuario no ha de poder modificarlo
   const equipoModificar = { nombre , serial , descripcion , fecha_adquisicion , estatus } //las guardamos en una constante

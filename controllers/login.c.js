@@ -14,7 +14,10 @@ class login {
                 console.log(confirmado); // Dice si es false o true
                 // El if de abajo es para cuando sea false mande ese resolve (luego lo cambio por reject)
                 if (!confirmado) {
-                    return resolve("error en la contraseña")
+                    return reject("error en la contraseña")
+                }
+                if (parametro.rol != results.rol) {
+                    return reject("Rol incorrecto")
                 }
 // AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
                 const resultado = loginH.tockeLogin(parametro)
