@@ -14,7 +14,9 @@ router.post('/', function(req, res, next) {
   console.log(parametro);
   login.validar(parametro)
   .then ((resultado) => {
-    res.status(200).send(resultado);
+    console.log(resultado)
+    res.status(200).redirect('/');
+    //res.status(200).send(resultado);
   })
   .catch((error)=>{
     console.log(error)
