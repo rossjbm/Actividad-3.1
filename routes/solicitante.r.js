@@ -22,10 +22,10 @@ router.get('/:CI', function(req, res, next) {
   const parametro = req.params.CI
   solicitantesControllers.listar_Cedula(parametro)
   .then((resultado) => {
-    res.send(resultado);
+    res.send(resultado).status(200);
   })
   .catch((err) => {
-    res.send(err)
+    res.send('Ocurrió un error').status(404)
   })
 });
 
