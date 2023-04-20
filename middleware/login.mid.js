@@ -4,7 +4,7 @@ class verificador3000{
     async verificador(req, res, next){
         console.log("llega");
         try{
-            const token= req.headers.authorization.split(' ').pop()
+            const token= await req.headers.authorization.split(' ').pop()
             var sellado = await Verificadorneitor3000.verificarToken(token) 
             if(sellado == null){
                 res.status(404)
@@ -16,13 +16,13 @@ class verificador3000{
             console.log('error al verificar');
             console.log(error);
             res.status(404)
-            return res.send(error)
+            return res.send("Necesita tener un token")
         }
     }  
      async restringirSolicitante(req, res, next){
         console.log("llega");
         try{
-            const token= req.headers.authorization.split(' ').pop()
+            const token= await req.headers.authorization.split(' ').pop()
             var sellado = await Verificadorneitor3000.verificarToken(token)
             if(sellado == null){
                 res.status(404)
@@ -39,7 +39,7 @@ class verificador3000{
             console.log('error al verificar');
             console.log(error);
             res.status(404)
-            return res.send(error)
+            return res.send("Necesita tener un token")
         }
     }
 }

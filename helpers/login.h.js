@@ -9,7 +9,7 @@ class login{
             },
             process.env.SECRETO,
             {
-                expiresIn:'60m'
+                expiresIn:'30m'
             }
         )
     }
