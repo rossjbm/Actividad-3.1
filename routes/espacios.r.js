@@ -1,13 +1,33 @@
 var express = require('express');
 var router = express.Router();
 
+
 //importar controladores OJO, NO MODIFICAR
 var espaciosControllers = require("../controllers/espacios.c.js")
+var verificador = require("../middleware/login.mid.js");
+const { token } = require('morgan');
 
 
 
 //LISTAR
 router.get('/', function(req, res, next) {
+  const tokenEntrante = req.headers.authorization.split(' ').pop()
+  console.log("req.headers.authorization");
+  
+  console.log("LLEGO TOKE: "+tokenEntrante)
+
+  verificador.verificador(tokenEntrante)
+    .then((sellado)=>{
+      console.log(sellado);
+      console.log("seccion activa")
+    })
+    .catch((err)=>{
+      console.log(err);
+      console.log("seccion cerrada");
+      res.send(err)
+    })
+
+
   console.log('ESTAMOS EN RUTA');
   espaciosControllers.listar()
   .then ((resultado) => {
