@@ -8,7 +8,7 @@ var verificador = require("../middleware/login.mid.js");
 
 
 //LISTAR metodo GET
-router.get('/',verificador.verificador, function(req, res, next) {
+router.get('/', function(req, res, next) {
   equipoControllers.listar()  //llamamos a nuestra funcion listar() de la clase equipoControllers, en la cual se incluye una promesa
   .then ((resultado) => {  //Cuando nuestra promesa se jecuta conrrectamente, al usuario le retornaremos o le mostramos lo que contiene la variable resultado, la cual se explica a más detalle en Controladores
     //res.send(resultado); //mostramos al usuario
