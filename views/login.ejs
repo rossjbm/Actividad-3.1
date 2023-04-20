@@ -1,0 +1,19 @@
+<%- include('templates/head', {TituloPrincipal:'Iniciar Sesión'}) %>
+<body>
+    <h1> <%= title %> </h1>
+    <div>
+        <form action="/" method="post">
+            <div>
+                <input type="text" name="usuario" placeholder="Usuario">
+                <br>
+                <input type="password" name="contrasena" placeholder="Contraseña">
+                <br>
+                <input type="text" name="rol" placeholder="Ingresa tu Rol">
+                <div>
+                    <button> INICIAR SESION</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

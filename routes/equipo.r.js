@@ -3,6 +3,7 @@ var router = express.Router();
 
 //importar controladores OJO
 var equipoControllers = require("../controllers/equipos.c.js")
+var verificador = require("../middleware/login.mid.js");
 
 
 
