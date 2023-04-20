@@ -15,6 +15,15 @@ class login{
     }
     async verificarToken(Token){
         console.log("llegaa");
+
+            try {
+                const sellado = JWT.verify(Token,process.env.SECRETO);
+                 return sellado
+              } catch(error) {
+                return null
+            }
+
+
         // return new Promise( (resolve, reject) => {
 
             // JWT.verify(Token,process.env.SECRETO, function(err, decoded) {
@@ -29,13 +38,7 @@ class login{
 
             //   });
               
-            try {
-                const sellado = JWT.verify(Token,process.env.SECRETO);
-                 return sellado
-              } catch(error) {
-                console.log("error correcto");
-                return error
-            }
+
 
         //     const sellado = JWT.verify(Token,process.env.SECRETO,{})
         //     console.log(sellado);

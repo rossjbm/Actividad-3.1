@@ -1,20 +1,25 @@
 const Verificadorneitor3000 = require("../helpers/login.h")
 
 class verificador3000{
-     verificador(token){
+    async verificador(req, res, next){
         console.log("llega");
-        new Promise((resolve, reject) => {
-            Verificadorneitor3000.verificarToken(token)
-
-            .then((sellado)=>{
-                resolve(sellado)
-
-            })
-            .catch((err)=>{
-                reject(err)
-            })
-
-        })
+        try{
+            const token= req.headers.authorization.split(' ').pop()
+            var sellado = await Verificadorneitor3000.verificarToken(token) 
+            console.log(sellado);
+            if(sellado == null){
+                res.status(404)
+                return res.send("Token Invalido")
+            }
+            return next()
+            
+        }catch(error) {
+            console.log('error al verificar');
+            console.log(error);
+            res.status(404)
+            return res.send(error)
+        }
+         
         
     }
 }
