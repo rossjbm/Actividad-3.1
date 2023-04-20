@@ -1,5 +1,6 @@
 const { response } = require("express");
 const equiposModel = require("../models/equipos.m")
+//const moment = require('moment');
 
 class equipoControllers {
   //LISTAR EN GENERAL
@@ -69,16 +70,16 @@ class equipoControllers {
            console.log('No existe el equipo'); //avismaos por consola que el equipo no existe
            return resolve(`No hay equipos registrados con esa id: ${parametro}`) //avisamos al usuario
         };
-        const eliminado = new Promise((resolve, reject) => { //declamos una constante "eliminado" como una promesa
-          equiposModel.eliminar(parametro) //Llamamos a la funcion eliminar enviamos la variable parametro (esto para que la DB encuentre el equipo a eliminar)
-          .then(() => {
-            resolve(`se ha eliminado el equipo con el id: ${parametro}`); //avisamos que se elimino correctamente
-          })
-          .catch((err) => {
-            reject(err); //si hay un error
-          })
+        //declamos una constante "eliminado" como una promesa
+        equiposModel.eliminar(parametro) //Llamamos a la funcion eliminar enviamos la variable parametro (esto para que la DB encuentre el equipo a eliminar)
+        .then(() => {
+          resolve(`se ha eliminado el equipo con el id: ${parametro}`); //avisamos que se elimino correctamente
         })
-        resolve(eliminado); //si todo es correcto, enviamos la constante eliminado
+        .catch((err) => {
+          reject(err); //si hay un error
+        })
+        
+        resolve('se elimino'); //si todo es correcto, enviamos la constante eliminado
       })
       .catch((err) => {
         reject(err) //si hay un error

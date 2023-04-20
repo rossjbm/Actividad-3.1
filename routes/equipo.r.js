@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
   equipoControllers.listar()  //llamamos a nuestra funcion listar() de la clase equipoControllers, en la cual se incluye una promesa
   .then ((resultado) => {  //Cuando nuestra promesa se jecuta conrrectamente, al usuario le retornaremos o le mostramos lo que contiene la variable resultado, la cual se explica a más detalle en Controladores
     //res.send(resultado); //mostramos al usuario
-    res.status(200).render('equipo', {title: 'EQUIPOS' });
+    res.status(200).render('equipo', {title: 'EQUIPOS', resultado: resultado });
   })
   .catch ((err) => {  //Por el contrario cuando nuestra promesa al ejecutarse ocurre un error le avisamos al usuario del mismo
     res.send(err) //mostramos al usuario el error
@@ -23,7 +23,7 @@ router.get('/:id', function(req, res, next) { //en la URL el usuario ha de dejar
   let parametro = req.params.id  //este ID lo guardamos en la variable parametro, pues este sera nuestro parametro de busqueda
   equipoControllers.listarID(parametro) //llamamos a la funcion listarID() y le enviamos el parametro de busqueda
   .then((resultado) => {
-    res.send(resultado) //mostramos al usuario
+    res.send(resultado); //mostramos al usuario
   })
   .catch((err) => {
     res.send(err) //mostramos al usuario el error
@@ -51,9 +51,9 @@ router.delete('/eliminar/:id', function(req, res, next) { // A la hora de elimin
   const parametro = req.params.id  //lo guardamos en una variable
   console.log(parametro); //para ver (por consola) el id del equipo que vamos a borrar
   equipoControllers.eliminar(parametro) //llamamos a la funcion eliminar y le enviamos nuestra variable con el iD
-  .then((eliminado) => { //Cuando se ejecute correctaente la promsa, recibimos a eliminado
+  .then(() => { 
     console.log('eliminado se muestra') //avisamos por consola que todo va bien
-    res.send(eliminado) //llamamos a eliminado
+    res.redirect('/equipos')
   })
   .catch((err) => {
     res.send(err) //mostramos al usuario el error
