@@ -14,7 +14,7 @@ router.post('/', function(req, res, next) {
   console.log(parametro);
   login.validar(parametro)
   .then ((resultado) => {
-    res.status(200).render('login', { title: 'HA INICIADO' });
+    res.status(200).send(resultado);
   })
   .catch((error)=>{
     console.log(error)
