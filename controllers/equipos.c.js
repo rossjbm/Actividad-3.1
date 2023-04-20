@@ -78,7 +78,6 @@ class equipoControllers {
         .catch((err) => {
           reject(err); //si hay un error
         })
-        
         resolve('se elimino'); //si todo es correcto, enviamos la constante eliminado
       })
       .catch((err) => {

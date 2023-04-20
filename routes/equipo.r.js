@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 //importar controladores OJO
-var equipoControllers = require("../controllers/equipos.c.js")
+var equipoControllers = require("../controllers/equipos.c.js");
+const { route } = require('./index.js');
 
 
 
@@ -14,39 +15,42 @@ router.get('/', function(req, res, next) {
     res.status(200).render('equipo', {title: 'EQUIPOS', resultado: resultado });
   })
   .catch ((err) => {  //Por el contrario cuando nuestra promesa al ejecutarse ocurre un error le avisamos al usuario del mismo
-    res.send(err) //mostramos al usuario el error
+    res.status(404).render('error'); //mostramos al usuario el error
   })
 });
 
 //listar por Id GET
-router.get('/:id', function(req, res, next) { //en la URL el usuario ha de dejar el numero (ID) correspondiente al equipo que desea ver
+router.get('/id:id', function(req, res, next) { //en la URL el usuario ha de dejar el numero (ID) correspondiente al equipo que desea ver
   let parametro = req.params.id  //este ID lo guardamos en la variable parametro, pues este sera nuestro parametro de busqueda
   equipoControllers.listarID(parametro) //llamamos a la funcion listarID() y le enviamos el parametro de busqueda
   .then((resultado) => {
-    res.send(resultado); //mostramos al usuario
+    res.status(200).render('equipo', {title: 'EQUIPOS', resultado: resultado }); //mostramos al usuario
   })
   .catch((err) => {
-    res.send(err) //mostramos al usuario el error
+    res.status(404).render('error'); //mostramos al usuario el error
   })
 });
 
 //AGREGAR EQUIPOS metodo POST
+router.get('/agregar', function(req, res, next) {
+  res.status(200).render('equipoPost', { title: 'Ingresa los Datos del Equipo' });
+});
 router.post('/agregar', function(req, res, next) { //Para agregar equipos el usuario ha de colocar en la URL "agregar", esto para que sepamos que la funcion a ejecutar es agregar y evitar confusiones. Importante que el usuario deje en el cuerpo del req los datos el equipo ha agregar
   const { nombre, serial, descripcion, fecha_adquisicion, estatus} = req.body //Del req.body solo tomaremos determinadas propiedades, esto para evitar errores si el usuario ingresa una propiedad de más que no es requerida. Además no se extrae el id, puesto que la DB la añadirá automáticamente
   const parametro = { nombre, serial, descripcion, fecha_adquisicion, estatus} //estas propiedades las cuardamos en una constante
   equipoControllers.agregar(parametro) //llamamos a la funcion y le enviamos nuestra variable con los datos
   .then((resultado) => {
     console.log("se agrego correctamente :)") //avisamos por consola que todo fue correto :)
-    res.send(resultado); //mostramos al usuario
+    res.status(200).redirect('/equipos');
   })
   .catch((err) => {
     console.log("error")
-    res.send(err) //mostramos al usuario el error
+    res.status(404).render('error');
   })
 });
 
 
-//eliminar equipos metodo DELETE
+//eliminar equipos metodo DELETE. En el navegador me esta devolviendo un GET x"d
 router.delete('/eliminar/:id', function(req, res, next) { // A la hora de eliminar se coloca el /eliminar y como siguiente el ID del equipo que se desea eliminar
   const parametro = req.params.id  //lo guardamos en una variable
   console.log(parametro); //para ver (por consola) el id del equipo que vamos a borrar

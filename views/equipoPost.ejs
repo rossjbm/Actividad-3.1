@@ -1,0 +1,33 @@
+<%- include('templates/head', {TituloPrincipal:'Agregar Equipos'}) %>
+<body>
+    <%- include('templates/nav') %>
+    <div>
+        <h2><%= title %></h2>
+    </div>
+    <div>
+        <form action="/equipos/agregar" method="post">
+            <div>
+                <input type="text" name="nombre" placeholder="Nombre" required>
+                <br>
+                <input type="text" name="serial" placeholder="Serial" required>
+                <br>
+                <input type="text" name="descripcion" placeholder="Descripción" required>
+                <br>
+                <input type="date" name="fecha_adquisicion" placeholder="Fecha de Adquisición" required>
+                <br>
+                <select name="estatus" required>
+                    <option value="Ocupado">Ocupado</option>
+                    <option value="Disponible" selected>Disponible</option>
+                    <option value="Mantenimiento">Mantenimiento</option>
+                </select>
+                <div>
+                    <button>GUARDAR</button>
+                </div>
+                
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
+    
