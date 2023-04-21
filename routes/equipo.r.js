@@ -20,7 +20,7 @@ router.get('/',verificador.verificador, function(req, res, next) {
 });
 
 //listar por Id GET
-router.get('/:id',verificador.restringirSolicitante,verificador.verificador, function(req, res, next) { //en la URL el usuario ha de dejar el numero (ID) correspondiente al equipo que desea ver
+router.get('/:id',verificador.verificador, function(req, res, next) { //en la URL el usuario ha de dejar el numero (ID) correspondiente al equipo que desea ver
   let parametro = req.params.id  //este ID lo guardamos en la variable parametro, pues este sera nuestro parametro de busqueda
   equipoControllers.listarID(parametro) //llamamos a la funcion listarID() y le enviamos el parametro de busqueda
   .then((resultado) => {
@@ -32,7 +32,7 @@ router.get('/:id',verificador.restringirSolicitante,verificador.verificador, fun
 });
 
 //AGREGAR EQUIPOS metodo POST
-router.post('/agregar',verificador.restringirSolicitante,verificador.restringirSolicitante, function(req, res, next) { //Para agregar equipos el usuario ha de colocar en la URL "agregar", esto para que sepamos que la funcion a ejecutar es agregar y evitar confusiones. Importante que el usuario deje en el cuerpo del req los datos el equipo ha agregar
+router.post('/agregar',verificador.restringirSolicitante, function(req, res, next) { //Para agregar equipos el usuario ha de colocar en la URL "agregar", esto para que sepamos que la funcion a ejecutar es agregar y evitar confusiones. Importante que el usuario deje en el cuerpo del req los datos el equipo ha agregar
   const { nombre, serial, descripcion, fecha_adquisicion, estatus} = req.body //Del req.body solo tomaremos determinadas propiedades, esto para evitar errores si el usuario ingresa una propiedad de más que no es requerida. Además no se extrae el id, puesto que la DB la añadirá automáticamente
   const parametro = { nombre, serial, descripcion, fecha_adquisicion, estatus} //estas propiedades las cuardamos en una constante
   equipoControllers.agregar(parametro) //llamamos a la funcion y le enviamos nuestra variable con los datos
@@ -48,7 +48,7 @@ router.post('/agregar',verificador.restringirSolicitante,verificador.restringirS
 
 
 //eliminar equipos metodo DELETE
-router.delete('/eliminar/:id',verificador.restringirSolicitante,verificador.restringirSolicitante, function(req, res, next) { // A la hora de eliminar se coloca el /eliminar y como siguiente el ID del equipo que se desea eliminar
+router.delete('/eliminar/:id',verificador.restringirSolicitante, function(req, res, next) { // A la hora de eliminar se coloca el /eliminar y como siguiente el ID del equipo que se desea eliminar
   const parametro = req.params.id  //lo guardamos en una variable
   console.log(parametro); //para ver (por consola) el id del equipo que vamos a borrar
   equipoControllers.eliminar(parametro) //llamamos a la funcion eliminar y le enviamos nuestra variable con el iD
@@ -63,7 +63,7 @@ router.delete('/eliminar/:id',verificador.restringirSolicitante,verificador.rest
 
 
 //modificar equipo metodo PUT
-router.put('/modificar/:id',verificador.restringirSolicitante,verificador.restringirSolicitante, function(req, res, next) {
+router.put('/modificar/:id',verificador.restringirSolicitante, function(req, res, next) {
   const parametro = req.params.id; //Guardamos id en la variable parametro, como el las anteriores ocasiones por medio de parametro buscaremos cual es el equipo a modificar
   let { nombre , serial , descripcion , fecha_adquisicion , estatus } = req.body; //extraemos de cuerpo las propiedades necesarias para actualizar, excepto el ID puesto que el usuario no ha de poder modificarlo
   const equipoModificar = { nombre , serial , descripcion , fecha_adquisicion , estatus } //las guardamos en una constante
