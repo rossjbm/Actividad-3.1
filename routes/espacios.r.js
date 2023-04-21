@@ -14,21 +14,21 @@ router.get('/', verificador.verificador, function(req, res, next) {
   console.log('ESTAMOS EN RUTA');
   espaciosControllers.listar()
   .then ((resultado) => {
-    res.send(resultado);
+    res.status(200).render('espacio', {title: 'ESPACIOS', resultado: resultado });
   })
   .catch ((err) => {
-    res.send(err)
+    res.status(404).render('error');
   })
 });
 
-router.get('/:id',verificador.verificador, function(req, res, next) {
+router.get('/id:id',verificador.verificador, function(req, res, next) {
   let parametro = req.params.id
   espaciosControllers.listarID(parametro)
   .then((resultado) => {
-    res.send(resultado)
+    res.status(200).render('espacio', {title: 'ESPACIOS', resultado: resultado });
   })
   .catch((err) => {
-    res.send(err)
+    res.status(404).render('error');
   })
 });
 

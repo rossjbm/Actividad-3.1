@@ -3,7 +3,40 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+.tituloPrincipal {
+  font-size: 20px;
+  color: #25190e;
+}
 
+.tituloSub {
+  font-size: 15px;
+  color: #363433;
+  text-align: center;
+}
+.modo {
+  display: inline-block;
+  text-align: center;
+}
+
+
+/*BOTON*/
+.buttonAgregar {
+  background-color: #f89500bd;
+  border: none;
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 4px 2px;
+  border-radius: 8px;
+}
+.buttonAgregar :hover {
+  color: rgb(0, 0, 0);
+}
+
+/*BARRA DE NAV*/
 /* Add a black background color to the top navigation */
 .topnav {
   background-color: #333;
@@ -28,6 +61,7 @@ body {
   background-color: #f77c35;
   color: white;
 }
+
 
 
 

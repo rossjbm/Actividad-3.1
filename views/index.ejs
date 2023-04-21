@@ -1,12 +1,22 @@
 <%- include('templates/head.ejs', {TituloPrincipal:'Pagina de Inicio'}) %>
   <body>
     <%- include('templates/nav') %>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p>Estaremos añadiendo tus reservas ante los servicios que te ofrecemos ;3</p>
-    <h2>Inicia Sesión</h2>
+
+    <div class="tituloPrincipal">
+      <h1 class="centrado"> <%= title %> </h1>
+    </div>
+
+    <div class="tituloSub">
+      <p>Bienvenido a la Sala de Audiovisuales</p>
+      <p>Podrás hacer tus reservas y disfrutar de los servicios Audiovisuales</p>
+    </div>
+
+    <div class="tituloPrincipal">
+      <h2>Inicia Sesión</h2>
+    </div>
+    
     <div>
-      <h3> <a href="/login"> <button>LOG IN</button> </a> </h3>
+      <a href="/login"> <button class="buttonAgregar">¡LOG IN!</button> </a>
     </div>
   </body>
 </html>

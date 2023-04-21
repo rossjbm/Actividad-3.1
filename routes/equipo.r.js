@@ -20,7 +20,7 @@ router.get('/',verificador.verificador, function(req, res, next) {
 });
 
 //listar por Id GET
-router.get('/:id',verificador.restringirSolicitante,verificador.verificador, function(req, res, next) { //en la URL el usuario ha de dejar el numero (ID) correspondiente al equipo que desea ver
+router.get('/id:id', verificador.verificador, function(req, res, next) { //en la URL el usuario ha de dejar el numero (ID) correspondiente al equipo que desea ver
   let parametro = req.params.id  //este ID lo guardamos en la variable parametro, pues este sera nuestro parametro de busqueda
   equipoControllers.listarID(parametro) //llamamos a la funcion listarID() y le enviamos el parametro de busqueda
   .then((resultado) => {
@@ -32,6 +32,9 @@ router.get('/:id',verificador.restringirSolicitante,verificador.verificador, fun
 });
 
 //AGREGAR EQUIPOS metodo POST
+router.get('/agregar', function(req, res, next) {
+  res.status(200).render('equipoPOST', { title: 'Añade un Equipo' });
+});
 router.post('/agregar',verificador.restringirSolicitante,verificador.restringirSolicitante, function(req, res, next) { //Para agregar equipos el usuario ha de colocar en la URL "agregar", esto para que sepamos que la funcion a ejecutar es agregar y evitar confusiones. Importante que el usuario deje en el cuerpo del req los datos el equipo ha agregar
   const { nombre, serial, descripcion, fecha_adquisicion, estatus} = req.body //Del req.body solo tomaremos determinadas propiedades, esto para evitar errores si el usuario ingresa una propiedad de más que no es requerida. Además no se extrae el id, puesto que la DB la añadirá automáticamente
   const parametro = { nombre, serial, descripcion, fecha_adquisicion, estatus} //estas propiedades las cuardamos en una constante
