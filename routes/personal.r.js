@@ -7,12 +7,13 @@
 var express = require('express');
 var router = express.Router();
 var personalControllers = require("../controllers/personal.c.js")
+var verificador = require("../middleware/login.mid.js");
 
 //importamos bcrypt
 const bcryptjs = require('bcryptjs');
 
 //listar
-router.get('/', function(req, res, next) {
+router.get('/',verificador.restringirSolicitante, function(req, res, next) {
   personalControllers.listar()
   .then((resultado)=>{
     res.send(resultado)
@@ -22,7 +23,7 @@ router.get('/', function(req, res, next) {
   })
 });
 //mostrar por cedula
-router.get('/:CI', function(req, res, next) {
+router.get('/:CI',verificador.restringirSolicitante, function(req, res, next) {
   const parametro = req.params.CI
   personalControllers.listarCedula(parametro)
   .then((resultado) => {
@@ -34,7 +35,7 @@ router.get('/:CI', function(req, res, next) {
 });
 
 // post
-router.post('/agregar', function(req, res, next) {
+router.post('/agregar',verificador.soloAdmin, function(req, res, next) {
   const { usuario_unico, nombre, CI, cargo, especialidad, contrasena} = req.body
   const parametro = { usuario_unico, nombre, CI, cargo, especialidad, contrasena}
   personalControllers.agregar(parametro)
@@ -50,7 +51,7 @@ router.post('/agregar', function(req, res, next) {
 
 
 //eliminar
-router.delete('/eliminar/:CI', function(req, res, next) {
+router.delete('/eliminar/:CI',verificador.soloAdmin, function(req, res, next) {
   const parametro = req.params.CI
   personalControllers.eliminar(parametro)
   .then((resultado) => {
