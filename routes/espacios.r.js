@@ -47,6 +47,9 @@ router.put('/modificar/:id',verificador.restringirSolicitante, function(req, res
 })
 
 //AGREGAR ESPACIOS
+router.get('/agregar', verificador.restringirSolicitante, function(req, res, next) {
+  res.status(200).render('espacioPOST', { title: 'Añade un Espacio' });
+});
 router.post('/agregar',verificador.restringirSolicitante, function(req, res, next) {
   const { nombre, direccion, descripcion, estatus} = req.body
   const parametro = { nombre, direccion, descripcion, estatus}

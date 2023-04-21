@@ -1,19 +1,26 @@
 <%- include('templates/head', {TituloPrincipal:'Iniciar Sesión'}) %>
 <body>
-    <h1> <%= title %> </h1>
-    <div>
+    <div class="tituloLogin"><h1> <%= title %> </h1></div>
+    <div class="containerLogin">
         <form action="/login" method="post">
-            <div>
-                <input type="text" name="usuario" placeholder="Usuario">
-                <br>
-                <input type="password" name="contrasena" placeholder="Contraseña">
-                <br>
-                <input type="text" name="rol" placeholder="Ingresa tu Rol">
-                <div>
-                    <button> INICIAR SESION</button>
-                </div>
-            </div>
+      
+          <label for="usuario">Usuario</label>
+          <input type="text" name="usuario" placeholder="Ingresa tu usuario..." class="text1">
+      
+          <label for="contrasena">Contraseña</label>
+          <input type="password" name="contrasena" placeholder="Ingresa tu contraseña..." class="text1">
+      
+          <label for="rol">ROL</label>
+          <select name="rol" class="text1">
+            <option value="admin">ADMIN</option>
+            <option value="personal" selected>PERSONAL</option>
+            <option value="solicitante">SOLICITANTE</option>
+          </select>
+      
+          <input type="submit" value="Iniciar Sesion" class="buttonLogin2">
+      
         </form>
     </div>
+
 </body>
 </html>
