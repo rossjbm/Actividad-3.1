@@ -1,8 +1,10 @@
 const JWT = require('jsonwebtoken')
+const cookie = require('cookie')
+
 
 class login{
     async tockeLogin(inicia){
-        return await JWT.sign(
+        const resultado = await JWT.sign(
             {
                 name: inicia.usuario,
                 role: inicia.rol
@@ -12,6 +14,14 @@ class login{
                 expiresIn:'30m'
             }
         )
+        return  await cookie.serialize('GalletaDeToken', resultado, {
+            httpOnly: true,
+            secure: false,//process.env.VERI =="produccion",
+            sameSite:'strict',
+            maxAge: 30*60*1000,
+            path:'/'
+
+        })
     }
     async verificarToken(Token){
         console.log("llegaa");

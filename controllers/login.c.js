@@ -19,16 +19,10 @@ class login {
                 if (parametro.rol != results.rol) {
                     return reject("Rol incorrecto")
                 }
-                const resultado = loginH.tockeLogin(parametro)
-                const Galleta = cookie.serialize('GalletaDeToken', resultado, {
-                    httpOnly: true,
-                    secure: process.env.VERI =="produccion",
-                    sameSite:'strict',
-                    maxAge: '30m',
-                    path:'/'
+                const resultado = await loginH.tockeLogin(parametro)
 
-                })
-                resolve(Galleta)
+                console.log(resultado);
+                resolve(resultado)
             })
             .catch ((error) => {
                 reject(error)

@@ -18,7 +18,8 @@ router.post('/', function(req, res, next) {
   login.validar(parametro)
   
   .then ((resultado) => {
-    console.log(resultado)
+    res.setHeader('Set-Cookie', resultado)
+    console.log(resultado)  //res.setHeader('Set-Cookie', resultado) manda la galleta :3
     res.status(200).redirect('/');
     //res.status(200).send(resultado);
   })
